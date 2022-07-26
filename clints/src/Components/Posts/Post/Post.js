@@ -1,9 +1,10 @@
-import React from 'react'
+import React from "react";
+import { useSelector } from "react-redux";
 
 const Post = () => {
-  return (
-    <div>Post</div>
-  )
-}
+  const selector = useSelector((item) => item.postReducers);
+  console.log(selector);
+  return <div>Post</div>;
+};
 
-export default Post
+export default Post;
