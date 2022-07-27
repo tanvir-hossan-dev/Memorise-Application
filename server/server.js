@@ -6,13 +6,12 @@ const bodyParser = require("body-parser");
 const postRouters = require("./routers/postRouters");
 const app = express();
 app.use(cors());
-app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
-app.use("/post", postRouters);
+app.use("/posts", postRouters);
 
 const port = process.env.PORT || 8000;
-console.log(port);
 mongoose.connect(process.env.MONGODB).then(() => {
   app.listen(port, () => {
     console.log(`${port} is listening`);

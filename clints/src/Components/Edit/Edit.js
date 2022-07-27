@@ -5,18 +5,19 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getPost } from "../../redux/actions/Post";
 
-const Form = () => {
-  const [creator, setCreator] = useState("");
-  const [title, setTitle] = useState("");
-  const [message, setMessage] = useState("");
-  const [tags, setTags] = useState("");
+const Edit = ({ data, setOpen }) => {
+  const [creator, setCreator] = useState(data.creator || "");
+  const [title, setTitle] = useState(data.title || "");
+  const [message, setMessage] = useState(data.message || "");
+  const [tags, setTags] = useState(data.tags || "");
   const dispatch = useDispatch();
+  const { _id } = data;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios
-        .post("http://localhost:4000/posts", {
+        .patch(`http://localhost:4000/posts/${_id}`, {
           creator,
           title,
           message,
@@ -27,6 +28,7 @@ const Form = () => {
           setTitle("");
           setMessage("");
           setTags("");
+          setOpen(false);
         })
         .catch((err) => {
           console.log(err);
@@ -44,7 +46,7 @@ const Form = () => {
     <>
       <Paper style={{ padding: "15px", marginTop: "40px" }}>
         <form autoComplete="off" noValidate>
-          <Typography variant="h6">Creating a Memory</Typography>
+          <Typography variant="h6">Update Memory</Typography>
           <TextField
             style={{ padding: "10px 0px" }}
             name="creator"
@@ -97,19 +99,7 @@ const Form = () => {
               type="submit"
               onClick={handleSubmit}
             >
-              Submit
-            </Button>
-          </div>
-          <div style={{ padding: "10px 0px" }}>
-            <Button
-              variant="contained"
-              color="secondary"
-              size="small"
-              fullWidth
-              type="submit"
-              onClick={clear}
-            >
-              Clear
+              Update
             </Button>
           </div>
         </form>
@@ -118,4 +108,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default Edit;
