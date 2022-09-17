@@ -1,16 +1,8 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import { Button, Card, Typography, Modal, Box } from "@mui/material";
 import moment from "moment";
-import axios from "axios";
 import Edit from "../../Edit/Edit";
 const Post = ({ data }) => {
-  // handleDelete
-  const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:4000/posts/${id}`);
-  };
-
-  // handleUpdate
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -33,9 +25,7 @@ const Post = ({ data }) => {
         <Typography variant="h6">Creator :{data.creator}</Typography>
         <Typography variant="h5">Message :{data.message}</Typography>
         <Typography variant="h6">Tags :{data.tags}</Typography>
-        <Typography variant="h6">
-          Time : {moment(data.createdAt).fromNow()}
-        </Typography>
+        <Typography variant="h6">Time : {moment(data.createdAt).fromNow()}</Typography>
         <div>
           <Button onClick={handleOpen} variant="contained">
             Edit
@@ -44,7 +34,7 @@ const Post = ({ data }) => {
             style={{ marginLeft: "30px" }}
             variant="contained"
             color="error"
-            onClick={() => handleDelete(data._id)}
+            // onClick={() => handleDelete(data._id)}
           >
             Delete
           </Button>

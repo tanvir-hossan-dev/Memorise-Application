@@ -19,17 +19,12 @@ function App() {
       </Container>
       <Grow in>
         <Container>
-          <Grid
-            container
-            justify="space-between"
-            alignItems="stretch"
-            spaching={3}
-          >
+          <Grid container justify="space-between" alignItems="stretch" spaching={3}>
             <Grid item xs={12} sm={8}>
               <Posts />
             </Grid>
             <Grid item xs={12} sm={4}>
-              <Form />
+              {/* <Form /> */}
             </Grid>
           </Grid>
         </Container>

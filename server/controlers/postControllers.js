@@ -24,8 +24,9 @@ exports.createPosts = async (req, res) => {
 exports.updatePost = async (req, res) => {
   const { id } = req.params;
   const post = req.body;
-  await Post.findByIdAndUpdate(id, post, { new: true });
-  res.status(200).json({ message: "update successful" });
+  console.log(post);
+  const update = await Post.findByIdAndUpdate(id, post, { new: true });
+  res.status(200).json({ message: "update successful", update });
 };
 
 exports.deletePost = async (req, res) => {

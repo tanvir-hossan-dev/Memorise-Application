@@ -1,32 +1,32 @@
 import { Container, Grid } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import Post from "../Posts/Post/Post";
-import { getPost } from "../../redux/actions/Post";
+import { useGetAllCardQuery } from "../../redux/features/card/cardApi";
 
 const Posts = () => {
-  const dispatch = useDispatch();
-  const data = useSelector((item) => item.postReducers);
-  useEffect(() => {
-    const getData = async () => {
-      const { data } = await axios.get("http://localhost:4000/posts");
-      dispatch(getPost(data));
-    };
-    getData();
-  }, []);
-  return !data.length ? (
-    <h1>Emty data</h1>
-  ) : (
-    <>
-      <Grid container style={{ marginTop: "40px" }} spacing={2}>
-        {data.map((item) => (
-          <Grid key={item._id} xs={12} sm={6} item>
-            <Post data={item} />
-          </Grid>
-        ))}
+  const { data, isLoading, error, isError, isSuccess } = useGetAllCardQuery();
+
+  let content = null;
+
+  if (isLoading) {
+    content = <h2>Loading.....</h2>;
+  } else if (!isLoading && isError) {
+    content = <h2>Error ocured</h2>;
+  } else if (!isLoading && !isError && data?.length === 0) {
+    content = <h2>No data found</h2>;
+  } else if (!isLoading && !isError && data?.length > 0) {
+    content = data.map((item) => (
+      <Grid key={item._id} xs={12} sm={6} item>
+        <Post data={item} />
       </Grid>
-    </>
+    ));
+  }
+
+  return (
+    <Grid container style={{ marginTop: "40px" }} spacing={2}>
+      {content}
+    </Grid>
   );
 };
 

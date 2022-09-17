@@ -1,42 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { TextField, Button, Typography, Paper } from "@mui/material";
-import FileBase64 from "react-file-base64";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { getPost } from "../../redux/actions/Post";
+import { useDispatch } from "react-redux";
+import { useEditCardMutation } from "../../redux/features/card/cardApi";
 
 const Edit = ({ data, setOpen }) => {
+  const dispatch = useDispatch();
   const [creator, setCreator] = useState(data.creator || "");
   const [title, setTitle] = useState(data.title || "");
   const [message, setMessage] = useState(data.message || "");
   const [tags, setTags] = useState(data.tags || "");
-  const dispatch = useDispatch();
-  const { _id } = data;
+  const { _id: id } = data;
+
+  const [editCard, { isError, isSuccess, error }] = useEditCardMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const { data } = await axios
-        .patch(`http://localhost:4000/posts/${_id}`, {
-          creator,
-          title,
-          message,
-          tags,
-        })
-        .then(() => {
-          setCreator("");
-          setTitle("");
-          setMessage("");
-          setTags("");
-          setOpen(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      dispatch(getPost(data));
-    } catch (err) {
-      console.log(err);
-    }
+    editCard({ id, data: { creator, title, message, tags } });
+    setOpen(false);
   };
   const clear = (e) => {
     e.preventDefault();
@@ -55,6 +36,7 @@ const Edit = ({ data, setOpen }) => {
             fullWidth
             value={creator}
             onChange={(e) => setCreator(e.target.value)}
+            required
           />
           <TextField
             style={{ padding: "10px 0px" }}
@@ -64,6 +46,7 @@ const Edit = ({ data, setOpen }) => {
             fullWidth
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            required
           />
           <TextField
             style={{ padding: "10px 0px" }}
@@ -73,6 +56,7 @@ const Edit = ({ data, setOpen }) => {
             fullWidth
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            required
           />
           <TextField
             style={{ padding: "10px 0px" }}
@@ -82,23 +66,11 @@ const Edit = ({ data, setOpen }) => {
             fullWidth
             value={tags}
             onChange={(e) => setTags(e.target.value)}
+            required
           />
-          {/* <div style={{ padding: "10px 0px" }}>
-            <FileBase64
-              type="file"
-              multiple={false}
-              onDone={(base64) => setSelectedFile(base64)}
-            />
-          </div> */}
+
           <div style={{ padding: "10px 0px" }}>
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              fullWidth
-              type="submit"
-              onClick={handleSubmit}
-            >
+            <Button variant="contained" color="primary" size="large" fullWidth type="submit" onClick={handleSubmit}>
               Update
             </Button>
           </div>
