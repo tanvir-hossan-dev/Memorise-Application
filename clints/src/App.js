@@ -39,12 +39,12 @@ function App() {
           />
         </div>
       </AppBar>
-      <Grow in style={{ padding: "0px 20px" }}>
+      {/* <Grow in style={{ padding: "0px 20px" }}>
         <Grid container>
           {" "}
           <Tags />{" "}
         </Grid>
-      </Grow>
+      </Grow> */}
       <Grow in style={{ padding: "0px 20px" }}>
         <Grid container spaching={8}>
           <Grid item xs={9}>

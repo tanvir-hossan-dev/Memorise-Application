@@ -33,13 +33,20 @@ const Form = () => {
   };
   const clear = (e) => {
     e.preventDefault();
+    setTimeout(() => {
+      setCreator("");
+      setTitle("");
+      setMessage("");
+      setTags("");
+      setErr("");
+    }, 500);
   };
 
   return (
     <div style={{ padding: "15px", marginTop: "40px", marginLeft: "20px" }}>
       <Paper>
         <form autoComplete="off" noValidate>
-          <Typography variant="h6">Creating a Memory</Typography>
+          <Typography variant="h6">Creating a Post</Typography>
           <TextField
             style={{ padding: "0px 0px" }}
             name="creator"
@@ -63,7 +70,7 @@ const Form = () => {
             style={{ padding: "10px 0px" }}
             name="message"
             variant="outlined"
-            label="Message"
+            label="Description"
             fullWidth
             value={message}
             onChange={(e) => setMessage(e.target.value)}

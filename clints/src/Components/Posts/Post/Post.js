@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { Button, Card, Typography, Modal, Box } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 import moment from "moment";
 import Edit from "../../Edit/Edit";
 import { useDeleteCardMutation } from "../../../redux/features/card/cardApi";
+import { FaRegEdit } from "react-icons/fa";
+
 const Post = ({ data }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -15,24 +19,30 @@ const Post = ({ data }) => {
 
   return (
     <>
-      <Card style={{ padding: "10px" }}>
-        <Typography variant="h5">Title :{data.title}</Typography>
-        <Typography variant="h6">Creator :{data.creator}</Typography>
-        <Typography variant="h5">Message :{data.message}</Typography>
-        <Typography variant="h6">Tags :{data.tags}</Typography>
-        <Typography variant="h6">Time : {moment(data.createdAt).fromNow()}</Typography>
-        <div>
-          <Button onClick={handleOpen} variant="contained">
-            Edit
-          </Button>
-          <Button
-            style={{ marginLeft: "30px" }}
-            variant="contained"
-            color="error"
-            onClick={() => handleDelete(data._id)}
-          >
-            Delete
-          </Button>
+      <Card style={{ padding: "20px" }}>
+        <Typography variant="h6">Title : {data.title}</Typography>
+        <Typography>Creator : {data.creator}</Typography>
+        <Typography>Description : {data.message}</Typography>
+        <Typography>Tags : {data.tags}</Typography>
+
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div>
+            <IconButton onClick={handleOpen} variant="contained">
+              <FaRegEdit />
+            </IconButton>
+            <IconButton
+              style={{ float: "right" }}
+              aria-label="delete"
+              onClick={() => handleDelete(data._id)}
+              color="error"
+            >
+              <DeleteIcon />
+            </IconButton>
+          </div>
+          <Typography style={{ fontSize: "14px" }} variant="h6">
+            {" "}
+            {moment(data.createdAt).fromNow()}
+          </Typography>
         </div>
       </Card>
       <Modal
