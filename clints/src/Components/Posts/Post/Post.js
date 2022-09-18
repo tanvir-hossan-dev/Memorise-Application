@@ -2,22 +2,17 @@ import React, { useState } from "react";
 import { Button, Card, Typography, Modal, Box } from "@mui/material";
 import moment from "moment";
 import Edit from "../../Edit/Edit";
+import { useDeleteCardMutation } from "../../../redux/features/card/cardApi";
 const Post = ({ data }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [deleteCard] = useDeleteCardMutation();
 
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
+  const handleDelete = async (id) => {
+    deleteCard(id);
   };
+
   return (
     <>
       <Card style={{ padding: "10px" }}>
@@ -34,7 +29,7 @@ const Post = ({ data }) => {
             style={{ marginLeft: "30px" }}
             variant="contained"
             color="error"
-            // onClick={() => handleDelete(data._id)}
+            onClick={() => handleDelete(data._id)}
           >
             Delete
           </Button>
@@ -52,6 +47,18 @@ const Post = ({ data }) => {
       </Modal>
     </>
   );
+};
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
 };
 
 export default Post;

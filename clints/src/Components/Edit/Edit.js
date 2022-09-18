@@ -17,7 +17,9 @@ const Edit = ({ data, setOpen }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     editCard({ id, data: { creator, title, message, tags } });
-    setOpen(false);
+    setTimeout(() => {
+      setOpen(false);
+    }, 500);
   };
   const clear = (e) => {
     e.preventDefault();
@@ -27,7 +29,9 @@ const Edit = ({ data, setOpen }) => {
     <>
       <Paper style={{ padding: "15px", marginTop: "40px" }}>
         <form autoComplete="off" noValidate>
-          <Typography variant="h6">Update Memory</Typography>
+          <Typography style={{ marginBottom: "10px" }} variant="h6">
+            Update Memory
+          </Typography>
           <TextField
             style={{ padding: "10px 0px" }}
             name="creator"
