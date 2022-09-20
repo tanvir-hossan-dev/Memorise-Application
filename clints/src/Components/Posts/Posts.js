@@ -2,9 +2,11 @@ import { Grid } from "@mui/material";
 import React from "react";
 import Post from "../Posts/Post/Post";
 import { useGetAllCardQuery } from "../../redux/features/card/cardApi";
+import { useSelector } from "react-redux";
 
 const Posts = ({ searchTerm }) => {
-  const { data, isLoading, isError } = useGetAllCardQuery();
+  const { tags } = useSelector((state) => state.filters);
+  const { data, isLoading, isError } = useGetAllCardQuery(tags);
 
   let content = null;
 

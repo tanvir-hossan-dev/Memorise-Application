@@ -5,7 +5,7 @@ const cardApi = apiSlice.injectEndpoints({
   tagsTypes: ["GetAllCard"],
   endpoints: (builder) => ({
     getAllCard: builder.query({
-      query: () => "/posts",
+      query: (tags) => "/posts",
       providesTags: ["GetAllCard"],
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         const { data } = await queryFulfilled;

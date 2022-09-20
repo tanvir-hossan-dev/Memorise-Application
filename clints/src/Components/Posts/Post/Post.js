@@ -17,15 +17,16 @@ const Post = ({ data }) => {
     deleteCard(id);
   };
 
+  console.log(data.createdAt);
+
   return (
     <>
       <Card style={{ padding: "20px" }}>
         <Typography variant="h6">Title : {data.title}</Typography>
         <Typography>Creator : {data.creator}</Typography>
         <Typography>Description : {data.message}</Typography>
-        <Typography>Tags : {data.tags}</Typography>
 
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
           <div>
             <IconButton onClick={handleOpen} variant="contained">
               <FaRegEdit />
